@@ -71,7 +71,9 @@
                             </div>
                         </div>
                     </div>
+                    
                 </div>
+                
 <?php $this->load->view('backend/footer'); ?>
 <script>
     $('#employees123').DataTable({

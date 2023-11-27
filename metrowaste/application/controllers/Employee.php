@@ -182,7 +182,7 @@ class Employee extends CI_Controller {
                 if($id){
             $success = $this->employee_model->Update($data,$id); 
             #$this->session->set_flashdata('feedback','Successfully Updated');
-            echo "Successfully Updated";
+            echo "Successfully Updates";
                 } else {
             $success = $this->employee_model->Add($data);
             #$this->confirm_mail_send($email,$pass_hash);        
@@ -222,7 +222,7 @@ class Employee extends CI_Controller {
                 if($id){
             $success = $this->employee_model->Update($data,$id); 
             #$this->session->set_flashdata('feedback','Successfully Updated');
-            echo "Successfully Updated";        
+            echo "Successfully Updatess";        
             #redirect('employee/Add_employee'); 
                 } else {
             $success = $this->employee_model->Add($data);
@@ -339,8 +339,8 @@ class Employee extends CI_Controller {
                 );
                 if($id){
             $success = $this->employee_model->Update($data,$id); 
-            $this->session->set_flashdata('feedback','Successfully Updated');
-            echo "Successfully Updated";
+            $this->session->set_flashdata('feedback','Successfully Updatedd');
+            echo "Successfully Updatedd";
                 }
 			}
         } else {
@@ -369,8 +369,9 @@ class Employee extends CI_Controller {
                 );
                 if($id){
             $success = $this->employee_model->Update($data,$id); 
-            $this->session->set_flashdata('feedback','Successfully Updated');
-            echo "Successfully Updated";
+            $this->session->set_flashdata('feedback','Successfully Update');
+            $this->employee_model->checkAndDeleteInactiveEmployees();
+            echo "Successfully Update";
                 }
             }
         }
@@ -478,8 +479,8 @@ class Employee extends CI_Controller {
 											);
 								if($id){
 							$success = $this->employee_model->Update($data,$id); 
-							$this->session->set_flashdata('feedback','Successfully Updated');
-							echo "Successfully Updated";
+							$this->session->set_flashdata('feedback','Successfully Update');
+							echo "Successfully Update";
 								}
 							}
 							} else {
@@ -510,8 +511,8 @@ class Employee extends CI_Controller {
 										//IF
 										if($id){
 											$success = $this->employee_model->Update($data,$id); 
-											$this->session->set_flashdata('feedback','Successfully Updated');
-											echo "Successfully Updated";
+											$this->session->set_flashdata('feedback','Successfully Update');
+											echo "Successfully Update";
 											}
 										}
 							}
@@ -594,8 +595,8 @@ class Employee extends CI_Controller {
                 );
             if(!empty($id)){
                 $success = $this->employee_model->UpdateParmanent_Address($id,$data);
-                $this->session->set_flashdata('feedback','Successfully Updated');
-                echo "Successfully Updated";                
+                $this->session->set_flashdata('feedback','Successfully Update');
+                echo "Successfully Update";                
             } else {
                 $success = $this->employee_model->AddParmanent_Address($data);
                 $this->session->set_flashdata('feedback','Successfully Added');
@@ -634,10 +635,10 @@ class Employee extends CI_Controller {
             if(empty($id)){
                 $success = $this->employee_model->AddParmanent_Address($data);
                 $this->session->set_flashdata('feedback','Successfully Added');
-                echo "Successfully Updated";
+                echo "Successfully Update";
             } else {
                 $success = $this->employee_model->UpdateParmanent_Address($id,$data);
-                $this->session->set_flashdata('feedback','Successfully Updated');
+                $this->session->set_flashdata('feedback','Successfully Update');
                 echo "Successfully Added";
             }
                        
@@ -1378,5 +1379,7 @@ else{
         $data['invalidem'] = $this->employee_model->getInvalidUser();
         $this->load->view('backend/invalid_user',$data);
     }
- 
+    // Employee controller
+
+  
 }

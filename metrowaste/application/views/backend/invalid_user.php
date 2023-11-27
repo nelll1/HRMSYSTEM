@@ -66,11 +66,10 @@
 												<td class="jsgrid-align-center ">
 
 												<a href="#" title="Edit" class="btn btn-sm btn-primary waves-effect waves-light inactive" data-id="<?php echo $value->id; ?>"><i class="fa fa-pencil-square-o"></i></a>
-                                                   
+                                                
 													<!-- <a href="<?php echo base_url(); ?>employee/view?I=<?php echo base64_encode($value->em_id); ?>" title="Edit" class="btn btn-sm btn-primary waves-effect waves-light"><i class="fa fa-pencil-square-o"></i></a> -->
                                                 <!--- delete Inactive--->    
                                                 </td>
-                                                
                                             </tr>
                                             <?php endforeach; ?>
                                         </tbody>
@@ -126,7 +125,7 @@
                                                             <label for="message-text" class="control-label">Remarks</label>
                                                             <textarea class="form-control" value="" name="remarks" id="message-text1" rows="4" placeholder="Please make it as Detailed as possible"></textarea>
                                                         </div>
-                                                    
+                                                                
                                                 </div>
                                                 <div class="modal-footer">
                                                    <input type="hidden" name="id" value="">
@@ -170,5 +169,8 @@
 												});
                                             });
                                         });
+
+
+                     
 					</script>
 <?php $this->load->view('backend/footer'); ?>

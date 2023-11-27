@@ -342,8 +342,21 @@ public function getEmployeeByEmCode($emCode) {
   }
 }
 
+  // Employee_model
+  public function checkAndDeleteInactiveEmployees() {
+    $this->db->where('status', 'INACTIVE');
+    $inactiveEmployees = $this->db->get('employee')->result();
 
+    foreach ($inactiveEmployees as $employee) {
+        $this->deleteEmployeeFingerprint($employee->em_id);
+    }
+}
 
+// Function to delete record from employee_fingerprint table
+private function deleteEmployeeFingerprint($employeeId) {
+    $this->db->where('employee_id', $employeeId);
+    $this->db->delete('employee_fingerprint');
+}
        
     }
 ?>
