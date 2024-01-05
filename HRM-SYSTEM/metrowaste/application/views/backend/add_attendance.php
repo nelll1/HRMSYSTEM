@@ -29,9 +29,8 @@
                             </div>
 							<div class="card-body">
 							<form method="POST" action="<?php echo site_url('formController/process_selected'); ?>" id="employeeForm">
-                            <div class="table-responsive">
-                                <!---Search box--->
-                            <div class="row">
+                              <!---Search box--->
+                              <div class="row">
                             <div class="col-3">
                                 <div class="form-group">
                                     <label for="employeeSearch">Search:</label>
@@ -39,6 +38,7 @@
                                 </div>
                             </div>
                         </div>
+    <div class="table-responsive">
         <table id="employees123" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
             <thead>
                 <tr>
@@ -68,16 +68,17 @@
                         </td>
                     </tr>
                     <?php endforeach; ?>
-                    <tr>
-                        <td colspan="6">
-							<button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Submit</button>
-                        </td>
-                    </tr>
-                </form>
+                   
             </tbody>
         </table>
+        <div>
+        <td colspan="6">
+		<button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Submit</button></td>
+        </div>
     </div>
+    </form>
 </div>
+
 
 
                                     </table>
@@ -273,9 +274,6 @@ fetch('Add_Attendance', {
 
 </script>
 
-
-
-                               
 <script>
     document.getElementById('employeeSearch').addEventListener('input', function () {
         var searchText = this.value.toLowerCase();
@@ -292,6 +290,9 @@ fetch('Add_Attendance', {
         }
     });
 </script>
+
+                                 
+
 
 
 <?php $this->load->view('backend/footer'); ?>

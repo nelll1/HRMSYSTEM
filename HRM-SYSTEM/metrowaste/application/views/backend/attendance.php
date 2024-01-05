@@ -1,5 +1,6 @@
 <?php $this->load->view('backend/header'); ?>
 <?php $this->load->view('backend/sidebar'); ?>
+<!-----ATTENDANCE WITH PRINT-->
          <div class="page-wrapper">
             <div class="message"></div>
             <div class="row page-titles">
