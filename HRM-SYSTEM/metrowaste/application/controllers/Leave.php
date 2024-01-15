@@ -63,32 +63,31 @@ class Leave extends CI_Controller
         }
     }
 
-    public function Add_Holidays()
-    {
-        if ($this->session->userdata('user_login_access') != False) {
-            $id      = $this->input->post('id');
-            $name    = $this->input->post('holiname');
-            $sdate   = $this->input->post('startdate');
-            $edate   = $this->input->post('enddate');
+    public function Add_Holidays(){
+		if($this->session->userdata('user_login_access') != False){
+			$id = $this->input->post('id');
+			$name = $this->input->post('holiname');
+			$sdate = $this->input->post('startdate');
+            $edate = $this->input->post('enddate');
+
             if(empty($edate)){
-               $nofdate = '1'; 
-                //die($nofdate);
-            } else{
-            $date1 = new DateTime($sdate);
-            $date2 = new DateTime($edate);
-            $diff = date_diff($date1,$date2);
-            $nofdate = $diff->format("%a");
-            //die($nofdate);     
+                //If end date is not provided, assume it as 1 day 
+                $nofdate = 1;
+            }else{
+                $date1 = new DateTime($sdate);
+                $date2 = new DateTime($edate);
+                $interval = $date1->diff($date2);
+                $nofdate = $interval->days +1; //Includng both start and end of dates
             }
-            $year    = date('m-Y',strtotime($sdate));
+
+            $year = date('m-Y', strtotime($sdate));
             $this->form_validation->set_error_delimiters();
             $this->form_validation->set_rules('holiname', 'Holidays name', 'trim|required|min_length[5]|max_length[120]|xss_clean');
-            
-            if ($this->form_validation->run() == FALSE) {
+
+            if($this->form_validation->run() == FALSE){
                 echo validation_errors();
-                #redirect("leave/Holidays");
-            } else {
-                $data = array();
+
+            }else{
                 $data = array(
                     'holiday_name' => $name,
                     'from_date' => $sdate,
@@ -96,23 +95,23 @@ class Leave extends CI_Controller
                     'number_of_days' => $nofdate,
                     'year' => $year
                 );
-                if (empty($id)) {
+
+                if(empty($id)){
                     $success = $this->leave_model->Add_HolidayInfo($data);
-                    $this->session->set_flashdata('feedback', 'Successfully Added');
-                    #redirect("leave/Holidays");
+                    $this->session->set_flashdata('feedback', ' Successfully Added');
                     echo "Successfully Added";
-                } else {
+                }else{
                     $success = $this->leave_model->Update_HolidayInfo($id, $data);
-                    $this->session->set_flashdata('feedback', 'Successfully Updated');
-                    #redirect("leave/Holidays");
+                    $this->session->set_flashdata('feedback', ' Successfully Updated');
                     echo "Successfully Updated";
                 }
-                
             }
-        } else {
-            redirect(base_url(), 'refresh');
+
+		}else{
+            redirect(baseurl(), 'refresh');
         }
-    }
+   }
+
 
     public function Add_leaves_Type()
     {
@@ -237,28 +236,27 @@ class Leave extends CI_Controller
             $hourAmount   = $this->input->post('hourAmount');
             $reason       = $this->input->post('reason');
             $type         = $this->input->post('type');
-            // $duration     = $this->input->post('duration');
-
-            if($type == 'Half Day') {
+    
+            $formattedStart = new DateTime($appstartdate);
+            $formattedEnd = new DateTime($appenddate);
+    
+            if ($type == 'Half Day') {
                 $duration = $hourAmount;
-            } else if($type == 'Full Day') { 
+            } elseif ($type == 'Full Day') {
                 $duration = 24;
-            } else { 
-                $formattedStart = new DateTime($appstartdate);
-                $formattedEnd = new DateTime($appenddate);
-
-                $duration = $formattedStart->diff($formattedEnd)->format("%d");
-                $duration = $duration * 24;
+            } else {
+                $interval = $formattedStart->diff($formattedEnd);
+                $duration = $interval->days + 1; // Include both start and end days
+                $duration *= 24; // Convert days to hours
             }
-
+    
             $this->load->library('form_validation');
             $this->form_validation->set_error_delimiters();
             $this->form_validation->set_rules('startdate', 'Start Date', 'trim|required|xss_clean');
+            
             if ($this->form_validation->run() == FALSE) {
                 echo validation_errors();
-                #redirect("employee/view?I=" .base64_encode($eid));
             } else {
-                $data = array();
                 $data = array(
                     'em_id' => $emid,
                     'typeid' => $typeid,
@@ -270,24 +268,20 @@ class Leave extends CI_Controller
                     'leave_duration' => $duration,
                     'leave_status' => 'Not Approve'
                 );
+    
                 if (empty($id)) {
                     $success = $this->leave_model->Application_Apply($data);
-                    #$this->session->set_flashdata('feedback','Successfully Updated');
-                    #redirect("leave/Application");
                     echo "Successfully Added";
                 } else {
                     $success = $this->leave_model->Application_Apply_Update($id, $data);
-                    #$this->session->set_flashdata('feedback','Successfully Updated');
-                    #redirect("leave/Application");
                     echo "Successfully Updated";
                 }
-                
             }
         } else {
             redirect(base_url(), 'refresh');
         }
     }
-
+    
     public function Add_L_Status()
     {
         if ($this->session->userdata('user_login_access') != False) {
